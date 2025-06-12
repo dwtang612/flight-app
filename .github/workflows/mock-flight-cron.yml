@@ -22,7 +22,14 @@ jobs:
         run: npm install
 
       - name: 🔐 Inject Mongo URI
-        run: echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: |
+          if [ -z "$MONGO_URI" ]; then
+            echo "MONGO_URI secret is not set. Please add it in your repository secrets." >&2
+            exit 1
+          fi
+          echo "MONGO_URI=$MONGO_URI" >> .env
 
       - name: 🛫 Run mock flight generator
         run: node scripts/generateMockFlights.js
