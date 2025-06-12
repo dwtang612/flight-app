@@ -1,2 +1,2 @@
 # flight-app
-This is a mockapp to check flightprices
+This is a mockapp to analyze flightprices and data
